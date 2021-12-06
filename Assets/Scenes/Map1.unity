@@ -854,10 +854,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Third Person Camera
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 5493071222705321491, guid: 8d776e968bd3ade45a77350918d60929, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+=======
+>>>>>>> main
     - target: {fileID: 5493071222705321501, guid: 8d776e968bd3ade45a77350918d60929, type: 3}
       propertyPath: targetObject
       value: 
@@ -999,10 +1002,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 807466524}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 1717261546391814575, guid: 08c20466735e27941afc19c8a821659c, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+=======
+>>>>>>> main
     - target: {fileID: 1717261547399049784, guid: 08c20466735e27941afc19c8a821659c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
