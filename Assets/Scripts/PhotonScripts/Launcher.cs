@@ -14,6 +14,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] Text roomNameText;
     [SerializeField] Transform roomListContent;
     [SerializeField] GameObject roomListItemPrefab;
+    [SerializeField] GameObject playerListItemPrefab;
+    [SerializeField] Transform playerListContent;
 
     void Awake(){
         Instance = this;
@@ -32,6 +34,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby(){
         MenuManager.Instance.OpenMenu("title");
         Debug.Log("Joined Lobby");
+        PhotonNetwork.NickName = "BattlePerson " + Random.Range(0,1000).ToString("0000");
     }
     
     public void CreateRoom(){
@@ -45,6 +48,18 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom(){
         MenuManager.Instance.OpenMenu("room");
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
+
+        Player[] players = PhotonNetwork.PlayerList;
+
+        foreach (Transform child in playerListContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
+        }
     }
     
     public override void OnCreateRoomFailed(short returnCode, string message){
@@ -61,6 +76,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void JoinRoom(RoomInfo info){
         PhotonNetwork.JoinRoom(info.Name);
         MenuManager.Instance.OpenMenu("loading");
+
     }
 
     public override void OnLeftRoom(){
@@ -74,7 +90,14 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
         for (int i = 0; i < roomList.Count; i++)
         {
+            if(roomList[i].RemovedFromList)
+                continue;
+            
             Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
         }
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer){
+            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
     }
 }
