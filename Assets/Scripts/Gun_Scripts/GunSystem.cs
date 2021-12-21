@@ -23,8 +23,7 @@ public class GunSystem : MonoBehaviour
     //Graphics
     public ParticleSystem muzzleFlash;
     public GameObject /*muzzleFlash,*/ bulletHoleGraphic; // from Unity Particle Pack Asset
-    // public CamShake camShake;
-    // public float camShakeMagnitude = .1f, camShakeDuration = .2f;
+
     public TextMeshProUGUI text;
 
     private void Awake()
@@ -47,7 +46,7 @@ public class GunSystem : MonoBehaviour
             shooting = Input.GetKeyDown(KeyCode.Mouse0); // For sniper or semi-auto weapon which can only shoot with 1 click at a time
 
         if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) // R is reload key and you only reload
-            Reload();                                                                // once you are out of bullets
+            Reload();                                                               // once you are out of bullets
 
         //Shoot
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0){
@@ -78,7 +77,7 @@ public class GunSystem : MonoBehaviour
         }
 
         //ShakeCamera
-        CameraShaker.Instance.ShakeOnce(4f, 4f,.1f, 1f); // using EZCameraShaker from Brackey's video (archived Asset)
+        //CameraShaker.Instance.ShakeOnce(4f, 4f,.1f, 1f); // using EZCameraShaker from Brackey's video (archived Asset)
         // StartCoroutine(camShake.Shake(camShakeDuration, camShakeMagnitude)); // Don't work for some reason 
 
         //Graphics
