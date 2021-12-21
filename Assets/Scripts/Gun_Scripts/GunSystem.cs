@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using TMPro;
-using EZCameraShake;
+using Photon.Pun;
 
 public class GunSystem : MonoBehaviour
 {
@@ -26,10 +28,13 @@ public class GunSystem : MonoBehaviour
 
     public TextMeshProUGUI text;
 
+    PhotonView PV;
+
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
+        PV = GetComponentInParent<PhotonView>();
     }
     private void Update()
     {
@@ -63,35 +68,36 @@ public class GunSystem : MonoBehaviour
         float y = Random.Range(-spread, spread);
 
         //Calculate Direction with Spread
-        Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
+        if(PV.IsMine){
 
-        //RayCast to do an actual shot
-        if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy)) // Start position of array is the fps camera
-        {
-            Debug.Log(rayHit.transform.name); // Check if everything works fine
+            Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
 
-            if (rayHit.transform.CompareTag("Enemy")) // if hits obj with Tag "Enemy" and has the script with the TakeDamage function in it
-                rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
-            if (rayHit.rigidbody != null) // self-explanatory, if hit an obj with rigidbody then send it backwards once shot
-                rayHit.rigidbody.AddForce(-rayHit.normal * impactForce);
+            //RayCast to do an actual shot
+            if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy)) // Start position of array is the fps camera
+            {
+                Debug.Log(rayHit.transform.name); // Check if everything works fine
+
+                if (rayHit.transform.CompareTag("Enemy")) // if hits obj with Tag "Enemy" and has the script with the TakeDamage function in it
+                    rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+                if (rayHit.rigidbody != null) // self-explanatory, if hit an obj with rigidbody then send it backwards once shot
+                    rayHit.rigidbody.AddForce(-rayHit.normal * impactForce);
+            }
+        
+
+
+            //Graphics
+            Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+            // Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity); for Game Object
+            muzzleFlash.Play();
+
+            bulletsLeft--;
+            bulletsShot--;
+
+            Invoke("ResetShot", timeBetweenShooting);
+
+            if(bulletsShot > 0 && bulletsLeft > 0)
+                Invoke("Shoot", timeBetweenShots);
         }
-
-        //ShakeCamera
-        //CameraShaker.Instance.ShakeOnce(4f, 4f,.1f, 1f); // using EZCameraShaker from Brackey's video (archived Asset)
-        // StartCoroutine(camShake.Shake(camShakeDuration, camShakeMagnitude)); // Don't work for some reason 
-
-        //Graphics
-        Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-        // Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity); for Game Object
-        muzzleFlash.Play();
-
-        bulletsLeft--;
-        bulletsShot--;
-
-        Invoke("ResetShot", timeBetweenShooting);
-
-        if(bulletsShot > 0 && bulletsLeft > 0)
-            Invoke("Shoot", timeBetweenShots);
     }
     private void ResetShot()
     {

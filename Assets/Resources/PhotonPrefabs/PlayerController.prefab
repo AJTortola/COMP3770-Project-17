@@ -295,7 +295,7 @@ MonoBehaviour:
   bulletsPerTap: 3
   allowButtonHold: 0
   fpsCam: {fileID: 55870019342332546}
-  attackPoint: {fileID: 55870019594545577}
+  attackPoint: {fileID: 0}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 4294967295

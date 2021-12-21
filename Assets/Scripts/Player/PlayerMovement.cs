@@ -38,7 +38,19 @@ public class PlayerMovement : MonoBehaviour
         if(PV.IsMine){
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
+            bool pause = Input.GetKeyDown(KeyCode.Escape);
 
+            //pause
+            if(pause){
+                GameObject.Find("Pause").GetComponent<Pause>().TogglePause();
+            }
+
+            if(Pause.paused){
+                x = 0f;
+                z = 0f;
+            }
+
+            //movement + jump
             animator.SetFloat("speed", Mathf.Abs(x) + Mathf.Abs(z));
 
             move = transform.right * x + transform.forward * z;
