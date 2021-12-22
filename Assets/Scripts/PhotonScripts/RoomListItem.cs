@@ -9,10 +9,13 @@ public class RoomListItem : MonoBehaviour
 {
 
     [SerializeField] Text text;
+    [SerializeField] Text numOfPlayers;
     public RoomInfo info;
-    public void SetUp(RoomInfo _info){
+    public void SetUp(RoomInfo _info, string numPlayers){
         info = _info;
         text.text = _info.Name;
+        Debug.Log(numPlayers);
+        numOfPlayers.text = numPlayers;       
     }
 
     public void OnClick(){

@@ -46,7 +46,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         if(string.IsNullOrEmpty(roomNameInput.text)){
             return;
         }
-        PhotonNetwork.CreateRoom(roomNameInput.text);
+        RoomOptions options = new RoomOptions();                    //set options
+        options.MaxPlayers = 4;                                     //set max players to 4
+
+        PhotonNetwork.CreateRoom(roomNameInput.text, options);
         MenuManager.Instance.OpenMenu("loading");
     }
 
@@ -119,7 +122,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         foreach(RoomInfo roomInfo in fullRoomList)
         {
             RoomListItem roomListItem = Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>();
-            roomListItem.SetUp(roomInfo);
+            roomListItem.SetUp(roomInfo, roomInfo.PlayerCount +"/"+roomInfo.MaxPlayers);
             roomListItems.Add(roomListItem);
         }
     }
@@ -134,7 +137,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
 
 
-        public override void OnPlayerEnteredRoom(Player newPlayer){
-                Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
-        }
+    public override void OnPlayerEnteredRoom(Player newPlayer){
+            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+    }
 }
