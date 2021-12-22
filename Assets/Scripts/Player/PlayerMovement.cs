@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     public CharacterController controller;
     public float speed = 15;
@@ -17,11 +17,17 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     Rigidbody rb;
     PhotonView PV;
+    const float maxHealth = 100f;
+    public float currentHealth = maxHealth;
+
+    PlayerManager playerManager;
+
 
     void Awake(){
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
 
+        playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
 
     void Start()
@@ -80,11 +86,34 @@ public class PlayerMovement : MonoBehaviour
         else{
             return;
         }
-        
     }
 
     private void Jump()
     {
         velocity.y = jumpForce;
     }
+
+    public void TakeDamage(float damage)
+    {
+        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage){
+        if(!PV.IsMine)
+            return;
+        
+        currentHealth -= damage;
+
+        if(currentHealth <= 0){
+            Die();
+        }
+    }
+
+    void Die(){
+        playerManager.Die();
+    }
 }
+
+
+

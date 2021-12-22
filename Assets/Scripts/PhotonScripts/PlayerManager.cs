@@ -4,10 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using System.IO;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
+    public static PlayerManager Instance;
     PhotonView PV;
-    
+    GameObject controller;
     void Awake(){
         PV = GetComponent<PhotonView>();
     }
@@ -22,7 +23,20 @@ public class PlayerManager : MonoBehaviour
     void CreatedController()
     {
         //Instantiate the player character controller
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), new Vector3(5,10,70), Quaternion.identity);
+        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), new Vector3(5,10,70), Quaternion.identity, 0, new object[] { PV.ViewID });
         Debug.Log("Created Player Controller");
+    }
+
+    IEnumerator CoolDownTime(){
+        yield return new WaitForSeconds(5f);
+        //respawn
+        CreatedController();
+    }
+    public void Die(){
+        Debug.Log("Died again bitch");
+        PhotonNetwork.Destroy(controller);
+        
+        StartCoroutine(CoolDownTime());
+        
     }
 }

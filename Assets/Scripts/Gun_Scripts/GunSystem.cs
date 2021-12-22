@@ -20,11 +20,10 @@ public class GunSystem : MonoBehaviour
     public Camera fpsCam;
     public Transform attackPoint;
     public RaycastHit rayHit;
-    public LayerMask whatIsEnemy;
 
     //Graphics
     public ParticleSystem muzzleFlash;
-    public GameObject /*muzzleFlash,*/ bulletHoleGraphic; // from Unity Particle Pack Asset
+    public GameObject bulletHoleGraphic; // from Unity Particle Pack Asset
 
     public TextMeshProUGUI text;
 
@@ -38,10 +37,9 @@ public class GunSystem : MonoBehaviour
     }
     private void Update()
     {
+        
         MyInput();
 
-        //SetText
-        // text.SetText(bulletsLeft + " / " + magazineSize); // Using TextMesh Pro
     }
     private void MyInput()
     {
@@ -73,12 +71,12 @@ public class GunSystem : MonoBehaviour
             Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
 
             //RayCast to do an actual shot
-            if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy)) // Start position of array is the fps camera
+            if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range)) // Start position of array is the fps camera
             {
                 Debug.Log(rayHit.transform.name); // Check if everything works fine
 
-                if (rayHit.transform.CompareTag("Enemy")) // if hits obj with Tag "Enemy" and has the script with the TakeDamage function in it
-                    rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+                if (rayHit.collider.GetComponent<PlayerMovement>()) // if hits obj with Tag "Enemy" and has the script with the TakeDamage function in it
+                    rayHit.collider.GetComponent<PlayerMovement>().TakeDamage(damage);
                 if (rayHit.rigidbody != null) // self-explanatory, if hit an obj with rigidbody then send it backwards once shot
                     rayHit.rigidbody.AddForce(-rayHit.normal * impactForce);
             }
@@ -87,7 +85,6 @@ public class GunSystem : MonoBehaviour
 
             //Graphics
             Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-            // Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity); for Game Object
             muzzleFlash.Play();
 
             bulletsLeft--;
