@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
+using UnityEngine.UI; 
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
@@ -33,10 +34,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         CreatedController();
     }
     public void Die(){
-        Debug.Log("Died again bitch");
+        Debug.Log("Died");
         PhotonNetwork.Destroy(controller);
         
         StartCoroutine(CoolDownTime());
-        
+
     }
 }
