@@ -567,6 +567,8 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 4133152413913358660}
   currentHealth: 100
+  healthBarImage: {fileID: 4005663399100905680, guid: fbda3a33c548d1d4cb048b1ffa934415, type: 3}
+  ui: {fileID: 873705356064501303, guid: 6e42e6b83afb4b341bce50031f2f34c0, type: 3}
 --- !u!114 &55870020923409971
 MonoBehaviour:
   m_ObjectHideFlags: 0
