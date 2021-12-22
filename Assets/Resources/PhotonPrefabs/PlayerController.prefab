@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55870019342332544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.091, z: 0.157}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0.157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 56374718021508462}
@@ -567,8 +567,6 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 4133152413913358660}
   currentHealth: 100
-  healthBarImage: {fileID: 4005663399100905680, guid: fbda3a33c548d1d4cb048b1ffa934415, type: 3}
-  ui: {fileID: 873705356064501303, guid: 6e42e6b83afb4b341bce50031f2f34c0, type: 3}
 --- !u!114 &55870020923409971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,6 +670,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4934560821053132033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147188442064292973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b004e8adc29bc047b634b9542839b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &55870020436159700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1077,6 +1087,11 @@ PrefabInstance:
 --- !u!4 &1147188442064130159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7673487251499544664, guid: c98043d57e0190845b790d7b92990bee, type: 3}
+  m_PrefabInstance: {fileID: 7320058244082491447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1147188442064292973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7673487251499248730, guid: c98043d57e0190845b790d7b92990bee, type: 3}
   m_PrefabInstance: {fileID: 7320058244082491447}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1147188442064130059 stripped
