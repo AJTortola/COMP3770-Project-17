@@ -1,11 +1,12 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using Photon.Pun;
 public class BlueFlag : MonoBehaviour
 {
     public bool capturedBlueFlag;
     public GameObject redTeamFlag;
     RedFlag redFlag;
-
+    int count;
     // Start is called before the first frame update
     private void Start()
     {
@@ -24,7 +25,19 @@ public class BlueFlag : MonoBehaviour
             case "BluePlayer" when redFlag.capturedRedFlag && gameObject.CompareTag("BlueFlag"): // when Blue Player returns to the abse with a red flag
                 redFlag.capturedRedFlag = false;
                 redFlag.gameObject.SetActive(true);
+                count++;
                 break;
+        }
+    }
+
+    void Update()
+    {
+        if (count == 10)
+        {
+            
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("BlueWin");
         }
     }
 }

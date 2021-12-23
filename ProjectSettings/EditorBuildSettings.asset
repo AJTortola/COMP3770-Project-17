@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Moon Map.unity
     guid: 9065dba704717ad46b29dbb1bfad4211
+  - enabled: 1
+    path: Assets/Scenes/Warehouse Map.unity
+    guid: 6c7c7d52f6b9cd745a2fdc9b63f2bc9d
+  - enabled: 1
+    path: Assets/Scenes/RedWin.unity
+    guid: 7c522479710dc674999b543af96d9bcb
+  - enabled: 1
+    path: Assets/Scenes/BlueWin.unity
+    guid: 610c10512d1f52e4493ec406dc3a5409
   m_configObjects: {}
