@@ -34,7 +34,7 @@ public class RedFlag : MonoBehaviour
     }
     void Update()
     {
-        if (count == 1)
+        if (count == 2)
         {
             
             Cursor.visible = true;
