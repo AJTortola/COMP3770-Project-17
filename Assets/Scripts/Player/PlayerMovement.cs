@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviourPunCallbacks
@@ -20,12 +21,17 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     const float maxHealth = 100f;
     public float currentHealth = maxHealth;
 
+    public Image healthBarImage;
+    public GameObject ui;
+
+    public string myTeam;
     PlayerManager playerManager;
 
 
     void Awake(){
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
+        
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
@@ -36,6 +42,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Debug.Log("done");
         }
+        healthBarImage = GameObject.Find("HealthBar").GetComponent<Image>();
+        ui = GameObject.Find("Canvas (1)").GetComponent<GameObject>();
     }
 
     // Update is called once per frame
@@ -104,9 +112,10 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             return;
         
         currentHealth -= damage;
-
+        healthBarImage.fillAmount = currentHealth / maxHealth;
         if(currentHealth <= 0){
             Die();
+            healthBarImage.fillAmount = 1.00f;
         }
     }
 

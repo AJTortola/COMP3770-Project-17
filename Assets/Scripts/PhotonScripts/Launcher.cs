@@ -138,6 +138,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 
     public override void OnPlayerEnteredRoom(Player newPlayer){
-            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+        Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
     }
 }

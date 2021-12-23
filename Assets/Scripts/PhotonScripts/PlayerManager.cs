@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public static PlayerManager Instance;
+
     PhotonView PV;
     GameObject controller;
+
+    int numOfPlayers;
+    public string myTeam;
     void Awake(){
         PV = GetComponent<PhotonView>();
     }
 
     void Start()
     {
+        numOfPlayers = PhotonNetwork.PlayerList.Length;
         if(PV.IsMine){
             CreatedController();
         }
@@ -24,8 +29,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     void CreatedController()
     {
         //Instantiate the player character controller
-        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), new Vector3(5,10,70), Quaternion.identity, 0, new object[] { PV.ViewID });
-        Debug.Log("Created Player Controller");
+        calculateTeam();
+        if(myTeam == "blue"){
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "BluePlayerController"), new Vector3(20,10,-21), Quaternion.identity, 0, new object[] { PV.ViewID });
+            Debug.Log("Created Blue Player Controller");
+            controller.GetComponent<TeamMember>().teamID = myTeam;
+        }
+        if(myTeam == "red"){
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "RedPlayerController"), new Vector3(19,10,25), Quaternion.identity, 0, new object[] { PV.ViewID });
+            Debug.Log("Created Blue Player Controller");
+            controller.GetComponent<TeamMember>().teamID = myTeam;
+        }
     }
 
     IEnumerator CoolDownTime(){
@@ -33,6 +47,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         //respawn
         CreatedController();
     }
+
+    
     public void Die(){
         Debug.Log("Died");
         PhotonNetwork.Destroy(controller);
@@ -40,4 +56,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         StartCoroutine(CoolDownTime());
 
     }
+
+    void calculateTeam(){
+        if(numOfPlayers % 2 == 1){
+            myTeam = "blue";
+        }
+        else if(numOfPlayers % 2 == 0){
+            myTeam = "red";
+        }
+    }
+
 }

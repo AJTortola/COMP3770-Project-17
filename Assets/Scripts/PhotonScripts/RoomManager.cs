@@ -9,7 +9,7 @@ using System.IO;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
-    
+
     void Awake(){
         if (Instance){                  //check if room manager instance exists
             Destroy(gameObject);        //destroy it
@@ -32,6 +32,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode){
         if(scene.buildIndex == 1){              //entered game scene
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            
         }
     }
 
