@@ -9,7 +9,7 @@ public class Load : MonoBehaviour
 
     public void Warehouse()
     {
-        SceneManager.LoadScene("Warehouse Map");
+        SceneManager.LoadScene(2);
     }
 
     public void doExitGame()
