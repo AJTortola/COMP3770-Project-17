@@ -9,6 +9,10 @@ TagManager:
   - Ammo
   - HealthBar
   - Canvas
+  - RedFlag
+  - BlueFlag
+  - RedPlayer
+  - BluePlayer
   layers:
   - Default
   - TransparentFX
