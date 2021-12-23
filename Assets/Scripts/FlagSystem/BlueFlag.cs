@@ -32,7 +32,7 @@ public class BlueFlag : MonoBehaviour
 
     void Update()
     {
-        if (count == 2)
+        if (count == 10)
         {
             
             Cursor.visible = true;
