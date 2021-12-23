@@ -21,7 +21,7 @@ public class Pause : MonoBehaviour
 
     public void Quit(){
         disconnecting = true;
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene(0);
+        Launcher.Instance.LeaveRoom();
+        //SceneManager.LoadScene(0);
     }
 }

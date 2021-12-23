@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -81,13 +82,19 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     }
 
-    public void StartGame(){
+    public void StartMoonGame(){
         PhotonNetwork.LoadLevel(1);
+    }
+    
+    public void StartWarehouseGame(){
+        PhotonNetwork.LoadLevel(2);
     }
 
     public void LeaveRoom(){
         PhotonNetwork.LeaveRoom();
-        MenuManager.Instance.OpenMenu("loading");
+        Destroy(RoomManager.Instance.gameObject);
+        //PhotonNetwork.Disconnect();
+        //MenuManager.Instance.OpenMenu("loading");
     }
 
     public void JoinRoom(RoomInfo info){
@@ -97,7 +104,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
 
     public override void OnLeftRoom(){
-        MenuManager.Instance.OpenMenu("title");
+        SceneManager.LoadScene(0);
+
+        base.OnLeftRoom();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
