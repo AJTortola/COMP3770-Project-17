@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedPlayerController
       objectReference: {fileID: 0}
+    - target: {fileID: 55870020923409962, guid: a1c5df0f8951fa844ac99da09af2b807, type: 3}
+      propertyPath: m_TagString
+      value: RedPlayer
+      objectReference: {fileID: 0}
     - target: {fileID: 55870020923409968, guid: a1c5df0f8951fa844ac99da09af2b807, type: 3}
       propertyPath: m_RootOrder
       value: 0
